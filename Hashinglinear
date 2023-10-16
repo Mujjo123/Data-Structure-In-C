@@ -1,0 +1,59 @@
+#include <stdio.h>
+#define SIZE 10
+
+int hashTable[SIZE];
+
+void initHashTable() 
+{
+    for (int i = 0; i < SIZE; i++) 
+    {
+        hashTable[i] = -1;  // Initialize all slots as -1 (empty).
+    }
+}
+
+int hash(int key) 
+{
+    return key % SIZE;  // Simple modulo-based hash function.
+}
+
+void insertLinearProbing(int key) 
+{
+    int index = hash(key);
+
+    if (hashTable[index] == -1) 
+    {
+        hashTable[index] = key;
+    } 
+    else 
+    {
+        // Collision occurred, perform linear probing.
+        while (hashTable[index] != -1) 
+        {
+            index = (index + 1) % SIZE;  // Move to the next slot.
+        }
+        hashTable[index] = key;
+    }
+}
+
+void displayHashTable() 
+{
+    printf("Hash Table Contents:\n");
+    for (int i = 0; i < SIZE; i++) 
+    {
+        printf("%d: %d\n", i, hashTable[i]);
+    }
+}
+
+int main() 
+{
+    initHashTable();
+
+    insertLinearProbing(5);
+    insertLinearProbing(25);
+    insertLinearProbing(15);
+    insertLinearProbing(35);
+
+    displayHashTable();
+
+    return 0;
+}
